@@ -5,7 +5,6 @@ Chrome extension that overlays publicly mapped ALPR camera locations directly on
 ## What this repo contains
 
 - The extension package
-- Chrome Web Store marketing assets
 - Listing copy and supporting docs
 
 ## Positioning
@@ -36,15 +35,4 @@ Google Maps is a trademark of Google LLC.
 Flock Safety is a trademark of Flock Group Inc.  
 This extension is not affiliated with or endorsed by Google or Flock Safety.
 
-## Store assets
-
-See:
-- `small-promo-440x280.png`
-- `marquee-1400x560.png`
-
-## Submission note
-
-Before publishing, confirm:
-- `manifest.json` references all icon sizes correctly
-- privacy answers match the actual code
 - screenshots show the real extension experience
