@@ -1,0 +1,329 @@
+#alpr-layer-root {
+  --alpr-blue: #1a73e8;
+  --alpr-blue-bright: #4aa3ff;
+  --alpr-red: #ea4335;
+  --alpr-red-dark: #d93025;
+  --alpr-text: #202124;
+  --alpr-muted: #5f6368;
+  --alpr-border: #dadce0;
+  --alpr-shadow: 0 1px 2px rgba(60, 64, 67, .30), 0 2px 6px 2px rgba(60, 64, 67, .15);
+  --alpr-control-left: 92px;
+  --alpr-control-bottom: 24px;
+  font-family: Roboto, Arial, sans-serif;
+  color: var(--alpr-text);
+  position: relative;
+  z-index: 2147483000;
+}
+
+#alpr-camera-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2147482500;
+}
+
+/* Square control that visually sits beside Google's Layers control. */
+#alpr-control-wrap {
+  position: fixed;
+  left: var(--alpr-control-left) !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: var(--alpr-control-bottom) !important;
+  z-index: 2147483100;
+  width: 79px;
+  height: 79px;
+}
+
+#alpr-layer-toggle {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 79px;
+  height: 79px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 1fr 18px;
+  place-items: center;
+  padding: 6px 6px 5px;
+  border: 0;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--alpr-text);
+  box-shadow: var(--alpr-shadow);
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+}
+
+#alpr-layer-toggle:hover { background: #f8f9fa; }
+#alpr-layer-toggle:focus-visible {
+  outline: 3px solid rgba(26, 115, 232, .28);
+  outline-offset: 2px;
+}
+
+.alpr-toggle-visual {
+  width: 48px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background:
+    radial-gradient(circle at 72% 30%, rgba(255,255,255,.9) 0 3px, transparent 4px),
+    linear-gradient(145deg, #dbe9f8, #a8c7fa 58%, #79a9ef);
+  box-shadow: inset 0 0 0 1px rgba(32,33,36,.08);
+}
+
+.alpr-toggle-visual svg {
+  width: 22px;
+  height: 22px;
+  fill: rgba(255,255,255,.10);
+  stroke: #174ea6;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.alpr-toggle-label {
+  align-self: end;
+  justify-self: stretch;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 3px;
+  padding-right: 27px;
+  text-align: left;
+  font: 500 12px/16px Roboto, Arial, sans-serif;
+  white-space: nowrap;
+}
+
+.alpr-toggle-count {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  padding: 0 4px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  background: var(--alpr-blue);
+  color: #fff;
+  font: 700 9px/1 Roboto, Arial, sans-serif;
+  box-shadow: 0 1px 2px rgba(60,64,67,.25);
+}
+.alpr-toggle-count:empty { display: none; }
+
+#alpr-cone-toggle {
+  position: absolute;
+  z-index: 3;
+  right: 4px;
+  bottom: 4px;
+  width: 23px;
+  height: 23px;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(60,64,67,.18);
+  border-radius: 7px;
+  background: rgba(255,255,255,.94);
+  color: var(--alpr-blue);
+  box-shadow: 0 1px 2px rgba(60,64,67,.18);
+  cursor: pointer;
+}
+#alpr-cone-toggle:hover { background: #f8f9fa; }
+#alpr-cone-toggle:focus-visible {
+  outline: 2px solid rgba(26,115,232,.35);
+  outline-offset: 1px;
+}
+#alpr-cone-toggle svg { width: 16px; height: 16px; overflow: visible; }
+#alpr-cone-toggle svg path { fill: currentColor; opacity: .78; }
+#alpr-cone-toggle svg circle { fill: var(--alpr-red); }
+#alpr-cone-toggle.is-off { color: #9aa0a6; background: rgba(255,255,255,.88); }
+#alpr-cone-toggle.is-off svg path { opacity: .30; }
+#alpr-cone-toggle:disabled { opacity: .42; cursor: default; }
+
+#alpr-layer-toggle.is-off {
+  color: var(--alpr-muted);
+}
+#alpr-layer-toggle.is-off .alpr-toggle-visual {
+  filter: grayscale(1);
+  opacity: .58;
+}
+#alpr-layer-toggle.is-off .alpr-toggle-count { display: none; }
+
+#alpr-layer-status {
+  position: fixed;
+  left: var(--alpr-control-left);
+  bottom: calc(var(--alpr-control-bottom) + 83px);
+  z-index: 2147483100;
+  width: 190px;
+  color: var(--alpr-muted);
+  font: 11px/16px Roboto, Arial, sans-serif;
+  text-shadow: 0 1px 1px #fff;
+  pointer-events: none;
+}
+
+#alpr-layer-attribution {
+  position: fixed;
+  left: var(--alpr-control-left);
+  bottom: calc(var(--alpr-control-bottom) - 19px);
+  z-index: 2147483100;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(255,255,255,.90);
+  color: #5f6368;
+  font: 9px/13px Roboto, Arial, sans-serif;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.alpr-camera-marker {
+  --camera-bearing: 0deg;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  pointer-events: auto;
+  cursor: pointer;
+  transform-origin: center;
+}
+
+.alpr-camera-dot {
+  position: absolute;
+  z-index: 2;
+  left: 6px;
+  top: 6px;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--alpr-red);
+  box-shadow: 0 1px 3px rgba(32,33,36,.58);
+  transition: transform 90ms ease, box-shadow 90ms ease, background 90ms ease;
+}
+
+.alpr-camera-eye {
+  width: 13px;
+  height: 11px;
+  overflow: visible;
+}
+.alpr-camera-eye path,
+.alpr-camera-eye circle {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.alpr-camera-marker:hover .alpr-camera-dot,
+.alpr-camera-marker:focus-visible .alpr-camera-dot,
+.alpr-camera-marker.is-selected .alpr-camera-dot {
+  transform: scale(1.14);
+  background: var(--alpr-red-dark);
+  box-shadow: 0 2px 7px rgba(32,33,36,.65);
+}
+
+.alpr-camera-marker:focus-visible { outline: none; }
+
+/*
+  A DeFlock-style field-of-view sector. It is centered on north and the whole
+  SVG rotates clockwise by the camera bearing (0° north, 90° east, etc.).
+*/
+.alpr-camera-cone {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  width: 220px;
+  height: 220px;
+  margin: -110px 0 0 -110px;
+  overflow: visible;
+  pointer-events: none;
+  transform: rotate(var(--camera-bearing));
+  transform-origin: 50% 50%;
+}
+
+.alpr-camera-cone path {
+  stroke: none;
+}
+
+/* Direction is ambient map information: always show the cone when known.
+   Its 220px diameter is fixed in screen pixels, just like the marker dot, so
+   zooming never makes it visually tiny or enormous relative to the marker. */
+.alpr-camera-marker.has-direction .alpr-camera-cone {
+  display: block;
+}
+#alpr-layer-root.cones-off .alpr-camera-cone {
+  display: none !important;
+}
+
+#alpr-info-card {
+  position: fixed;
+  z-index: 2147483200;
+  width: 272px;
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid var(--alpr-border);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: var(--alpr-shadow);
+}
+
+.alpr-info-close {
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--alpr-muted);
+  font: 24px/30px Arial, sans-serif;
+  cursor: pointer;
+}
+.alpr-info-close:hover { background: #f1f3f4; }
+.alpr-info-eyebrow { color: var(--alpr-blue); font-size: 10px; font-weight: 700; letter-spacing: .08em; }
+.alpr-info-title { margin-top: 4px; font-size: 18px; font-weight: 500; }
+#alpr-info-card dl { margin: 12px 0 0; }
+#alpr-info-card dl > div {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 8px;
+  padding: 3px 0;
+  font-size: 12px;
+  line-height: 17px;
+}
+#alpr-info-card dt { color: var(--alpr-muted); }
+#alpr-info-card dd { margin: 0; overflow-wrap: anywhere; }
+.alpr-info-source {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  color: var(--alpr-muted);
+  font-size: 10px;
+  line-height: 14px;
+}
+
+@media (max-width: 700px) {
+  #alpr-control-wrap,
+  #alpr-layer-toggle {
+    width: 69px;
+    height: 69px;
+  }
+  .alpr-toggle-visual { width: 42px; height: 30px; }
+  #alpr-layer-attribution { display: none; }
+}

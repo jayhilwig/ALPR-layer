@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "ALPR Layer for Google Maps",
+  "version": "0.0.7",
+  "description": "Adds publicly mapped ALPR camera locations and direction cones directly to Google Maps.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://data.dontgetflocked.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/maps/*",
+        "https://maps.google.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
